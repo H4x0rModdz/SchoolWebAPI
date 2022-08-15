@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
-using WebAPI.Repository;
-using WebAPI.Service;
+using WebAPI.Repository.Student;
+using WebAPI.Service.Student;
 
 var builder = WebApplication.CreateBuilder(args);
 

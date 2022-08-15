@@ -1,6 +1,6 @@
 ﻿using WebAPI.Models;
 
-namespace WebAPI.Repository
+namespace WebAPI.Repository.Student
 {
     public interface IStudentRepository
     {

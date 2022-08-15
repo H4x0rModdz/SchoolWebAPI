@@ -12,5 +12,6 @@ namespace WebAPI.Data
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<SchoolSubject> Subjects { get; set; }
     }
 }

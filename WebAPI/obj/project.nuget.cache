@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "McvTppH+OiJYtVC+G1yvvQvV7SBZ2rdmid+K+InqwGucrCe9+RidZy6n80y5vRvufnmZUB45SmZ5h5wnInCgLw==",
+  "dgSpecHash": "Vo5vYkjkFlikZIQNHy+Fd907zeSg6rQvk8anlE0UXEUy/fCI/1TTeXrjAy+xdliD8htpSai1PyQoMWiviEF7kg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lucas\\source\\repos\\WebAPI\\WebAPI\\WebAPI.csproj",
+  "projectFilePath": "C:\\Users\\lucas\\Documents\\GitHub\\SchoolWebAPI\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lucas\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\lucas\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

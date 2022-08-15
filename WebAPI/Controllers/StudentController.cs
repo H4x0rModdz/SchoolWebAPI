@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
-using WebAPI.Service;
+using WebAPI.Service.Student;
 
 namespace WebAPI.Controllers
 {

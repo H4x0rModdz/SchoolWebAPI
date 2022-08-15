@@ -1,6 +1,6 @@
 ﻿using WebAPI.Models;
 
-namespace WebAPI.Service
+namespace WebAPI.Service.Student
 {
     public interface IStudentService
     {
