@@ -54,6 +54,7 @@ namespace WebAPI.Models
         public string educationLevel { get; set; }
         [Required]
         public string Grade { get; set; }
+        [JsonIgnore]
         public ICollection<SchoolSubject> Subjects { get; set; } // 1 student - many subjects
     }
 }

@@ -2,7 +2,7 @@
 using WebAPI.Data;
 using WebAPI.Models;
 
-namespace WebAPI.Repository.Student
+namespace WebAPI.Repository
 {
     public class StudentRepository : IStudentRepository
     {

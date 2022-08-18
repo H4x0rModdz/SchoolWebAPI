@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
-using WebAPI.Repository.Student;
-using WebAPI.Service.Student;
+using WebAPI.Repository;
+using WebAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddTransient<IAppDbContext, AppDbContext>();
 builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 builder.Services.AddTransient<IStudentService, StudentService>();
+builder.Services.AddTransient<ISchoolSubjectRepository, SchoolSubjectRepository>();
+builder.Services.AddTransient<ISchoolSubjectService, SchoolSubjectService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

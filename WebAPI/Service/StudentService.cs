@@ -1,7 +1,7 @@
 ﻿using WebAPI.Models;
-using WebAPI.Repository.Student;
+using WebAPI.Repository;
 
-namespace WebAPI.Service.Student
+namespace WebAPI.Service
 {
     public class StudentService : IStudentService
     {
