@@ -12,7 +12,7 @@ This project was made for the purpose of studies, where I took it from my old re
 <img src="https://i.ibb.co/rFRwztf/image-2022-08-12-110746385.png">
 
 # Design Pattern
-<img src="https://i.ibb.co/KKK23FM/Screenshot-1.png">
+<img src="https://i.ibb.co/NNTWRQm/Screenshot-4.png">
 
 # About the old API
 There is already a first summary of this API, to consult <a href="https://github.com/H4x0rModdz/DesafioViceriWebApi#readme">Click Here</a>
