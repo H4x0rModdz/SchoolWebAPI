@@ -36,16 +36,13 @@ namespace WebAPI.Models
         public string Address { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        [JsonIgnore]
         public string AddedIn { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
-        [JsonIgnore]
         public DateTime? addedInEdited
         {
             get { return DateTime.Parse(AddedIn, new CultureInfo("pt-BR")); }
         }
         [Required]
         public string BirthDate { get; set;}
-        [JsonIgnore]
         public DateTime? dateOfBirth
         {
             get { return DateTime.Parse(BirthDate, new CultureInfo("pt-BR")); }
@@ -54,7 +51,6 @@ namespace WebAPI.Models
         public string educationLevel { get; set; }
         [Required]
         public string Grade { get; set; }
-        [JsonIgnore]
-        public ICollection<SchoolSubject> Subjects { get; set; } // 1 student - many subjects
+        public ICollection<SchoolSubject> Subjects { get; set; }
     }
 }

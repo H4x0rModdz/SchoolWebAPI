@@ -7,8 +7,6 @@ namespace WebAPI.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public double Test_Score { get; set; }
-        [JsonIgnore]
-        public Student Student { get; set; } // 1 student
-
+        //public Student Student { get; set; }
     }
 }
