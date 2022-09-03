@@ -23,8 +23,6 @@ namespace WebAPI.Service
                 throw new ArgumentException("CPF already exists");
 
             student.Id = Guid.NewGuid();
-            //student.BirthDate = student.BirthDate;
-            //student.AddedIn = DateTime.Now;
 
             _studentRepository.Add(student);
 

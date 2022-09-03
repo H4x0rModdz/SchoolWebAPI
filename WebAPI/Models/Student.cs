@@ -21,7 +21,6 @@ namespace WebAPI.Models
             get { return _Password; }
             set
             {
-
                 if (string.IsNullOrWhiteSpace(value))
                     _Password = value;
                 else

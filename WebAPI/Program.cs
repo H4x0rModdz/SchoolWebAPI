@@ -11,10 +11,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddTransient<IAppDbContext, AppDbContext>();
-builder.Services.AddTransient<IStudentRepository, StudentRepository>();
-builder.Services.AddTransient<IStudentService, StudentService>();
-builder.Services.AddTransient<ISchoolSubjectRepository, SchoolSubjectRepository>();
+
 builder.Services.AddTransient<ISchoolSubjectService, SchoolSubjectService>();
+builder.Services.AddTransient<ISchoolSubjectRepository, SchoolSubjectRepository>();
+
+builder.Services.AddTransient<IStudentService, StudentService>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
