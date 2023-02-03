@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace WebAPI.Models
 {
@@ -9,5 +10,6 @@ namespace WebAPI.Models
         [Required(ErrorMessage = "The Name field is required")]
         public string Name { get; set; }
         public double Test_Score { get; set; }
+        //public ICollection<Student> Students { get; set; }
     }
 }

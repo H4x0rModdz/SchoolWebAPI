@@ -49,12 +49,7 @@ namespace WebAPI.Repository
 
         public bool VerifyIfSubjectAlreadyExists(int id)
         {
-            var verifyIdInDb = _context.Subjects.Where(s => s.Id == id).ToList();
-
-            if (verifyIdInDb.Count > 1)
-                return true;
-
-            return false;
+            return _context.Subjects.Any(s => s.Id == id);
         }
     }
 }

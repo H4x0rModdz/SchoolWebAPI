@@ -33,17 +33,17 @@ namespace WebAPI.Repository
         {
             var studentFound = GetById(student.Id);
 
-            studentFound.FirstName = student.FirstName;
-            studentFound.LastName = student.LastName;
-            studentFound.Password = student.Password;
-            studentFound.Email = student.Email;
-            studentFound.CPF = student.CPF;
             studentFound.Address = student.Address;
-            studentFound.PhoneNumber = student.PhoneNumber;
             studentFound.AddedIn = student.AddedIn;
             studentFound.BirthDate = student.BirthDate;
+            studentFound.CPF = student.CPF;
             studentFound.educationLevel = student.educationLevel;
-            studentFound.Grade = student.Grade;
+            studentFound.Email = student.Email;
+            studentFound.LastName = student.LastName;
+            studentFound.Login = student.Login;
+            studentFound.Password = student.Password;
+            studentFound.PhoneNumber = student.PhoneNumber;
+            studentFound.Subjects = student.Subjects;
 
             _context.Students.Update(studentFound);
             _context.SaveChanges();
@@ -61,42 +61,26 @@ namespace WebAPI.Repository
 
         public bool VerifyIfCpfAlreadyExists(Student student)
         {
-            var students = _context.Students.Where(u => u.CPF == student.CPF).ToList();
-
-            if (students.Count == 0)
-                return false;
-
-            var isMyStudentCPF = students.Where(u => u.Id == student.Id).FirstOrDefault() != null;
-
-            if (isMyStudentCPF)
-                return false;
-
-            return true;
+            return _context.Students.Any(s => s.CPF == student.CPF && s.Id != student.Id);
         }
 
         public bool VerifyIfEmailAlreadyExists(Student student)
         {
-            var students = _context.Students.Where(s => s.Email == student.Email).ToList();
-
-            if (students.Count == 0)
-                return false;
-
-            var isMyStudentEmail = students.Where(u => u.Id == student.Id).FirstOrDefault() != null;
-
-            if (isMyStudentEmail)
-                return false;
-
-            return true;
+            return _context.Students.Any(s => s.Email == student.Email && s.Id != student.Id);
         }
 
         public bool VerifyIfStudentAlreadyExists(Guid id)
         {
-            var verifyIdInDb = _context.Students.Where(s => s.Id == id).ToList();
-
-            if (verifyIdInDb.Count > 1)
-                return true;
-
-            return false;
+            return _context.Students.Any(s => s.Id == id);
+        }
+        public void FilterSubjects(Student student)
+        {
+            if (student.Subjects != null)
+            {
+                student.Subjects = student.Subjects
+                    .Where(subject => !string.IsNullOrEmpty(subject.Name) && subject.Id != 0)
+                    .ToList();
+            }
         }
     }
 }

@@ -10,13 +10,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 
-builder.Services.AddTransient<IAppDbContext, AppDbContext>();
+builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
-builder.Services.AddTransient<ISchoolSubjectService, SchoolSubjectService>();
-builder.Services.AddTransient<ISchoolSubjectRepository, SchoolSubjectRepository>();
+builder.Services.AddScoped<ISchoolSubjectService, SchoolSubjectService>();
+builder.Services.AddScoped<ISchoolSubjectRepository, SchoolSubjectRepository>();
 
-builder.Services.AddTransient<IStudentService, StudentService>();
-builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -12,5 +12,6 @@ namespace WebAPI.Repository
         bool VerifyIfEmailAlreadyExists(Student student);
         bool VerifyIfCpfAlreadyExists(Student student);
         bool VerifyIfStudentAlreadyExists(Guid id);
+        void FilterSubjects(Student student);
     }
 }

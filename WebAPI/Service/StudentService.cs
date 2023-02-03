@@ -22,6 +22,8 @@ namespace WebAPI.Service
             if (_studentRepository.VerifyIfCpfAlreadyExists(student))
                 throw new ArgumentException("CPF already exists");
 
+            _studentRepository.FilterSubjects(student);
+
             student.Id = Guid.NewGuid();
 
             _studentRepository.Add(student);
@@ -41,6 +43,8 @@ namespace WebAPI.Service
 
             if (_studentRepository.VerifyIfCpfAlreadyExists(student))
                 throw new ArgumentException("CPF already exists");
+
+            _studentRepository.FilterSubjects(student);
 
             _studentRepository.Edit(student);
 
