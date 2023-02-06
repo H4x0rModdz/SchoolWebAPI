@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página de Pagamento</title>
+    <link rel="stylesheet" href="~/css/payment.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container my-5 shadow">
+        <h1 class="text-center"></h1>
+        <form>
+            <div class="form-group text-center">
+                <label for="inputNome">Nome do Titular</label>
+                <input type="text" class="form-control" id="inputNome" placeholder="Nome do Titular">
+            </div>
+            <div class="form-group text-center">
+                <label for="inputNumero">Número do Cartão</label>
+                <input type="text" class="form-control" id="inputNumero" placeholder="Número do Cartão">
+            </div>
+            <div class="form-group text-center">
+                <label for="inputVencimento">Data de Vencimento</label>
+                <input type="text" class="form-control" id="inputVencimento" placeholder="MM/AA">
+            </div>
+            <div class="form-group text-center">
+                <label for="inputCVV">CVV</label>
+                <input type="text" class="form-control" id="inputCVV" placeholder="CVV">
+            </div>
+            <div class="form-group d-flex justify-content-between">
+                <button type="button" class="btn btn-info">Voltar</button>
+                <button type="submit" class="btn btn-primary ">Confirmar Compra</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

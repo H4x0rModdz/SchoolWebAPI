@@ -17,20 +17,24 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetAll()
+        public ActionResult GetAll(string filter = null) // filter example: filter = educationLevel == HighSchool
         {
+            if (string.IsNullOrEmpty(filter))
+                return BadRequest("Invalid filter");
+
             try
             {
-                var studentsList = _service.GetAll();
+                var studentsList = _service.GetAll(filter);
 
-                if (studentsList.Count() < 1)
+                if (studentsList == null || !studentsList.Any())
                     return NoContent();
 
                 return Ok(studentsList);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error getting student list");
+                return BadRequest("There was an error processing your request");
             }
         }
 
@@ -43,12 +47,12 @@ namespace WebAPI.Controllers
         {
             try
             {
-                _service.GetById(id);
+                var student = _service.GetById(id);
 
-                if (_service.GetById(id) is null)
+                if (student == null)
                     return BadRequest();
 
-                return Ok(_service.GetById(id));
+                return Ok(student);
             }
             catch (Exception ex)
             {
@@ -67,12 +71,13 @@ namespace WebAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Created("~api/Student/", _service.Add(student));
-
+                var addedStudent = _service.Add(student);
+                return CreatedAtAction(nameof(GetById), new { id = addedStudent.Id }, addedStudent);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error adding student");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -80,12 +85,18 @@ namespace WebAPI.Controllers
         [Route("EditStudent")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Edit([FromBody] Student student)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
+
+                var studentToEdit = _service.GetById(student.Id);
+
+                if (studentToEdit is null)
+                    return NotFound();
 
                 return Ok(_service.Edit(student));
             }
@@ -105,7 +116,16 @@ namespace WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _service.Delete(id);
+            try
+            {
+                _service.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                _service.LogError(ex, "Error deleting student");
+                return BadRequest(ex.Message);
+            }
+
             return Ok();
         }
     }
