@@ -17,13 +17,13 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
             try
             {
-                var subjectsList = _service.GetAll();
+                var subjectsList = await _service.GetAll();
 
-                if (subjectsList.Count() < 1)
+                if (!subjectsList.Any())
                     return NoContent();
 
                 return Ok(subjectsList);
@@ -43,12 +43,12 @@ namespace WebAPI.Controllers
         {
             try
             {
-                _service.GetById(id);
+                var subject = _service.GetById(id);
 
-                if (_service.GetById(id) is null)
-                    return BadRequest();
+                if (subject is null)
+                    return NotFound();
 
-                return Ok(_service.GetById(id));
+                return Ok(subject);
             }
             catch (Exception ex)
             {
@@ -62,13 +62,13 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Add([FromBody] SchoolSubject subject)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                return Created("~api/SchoolSubject/", _service.Add(subject));
-
+                var result = _service.Add(subject);
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
             }
             catch (Exception ex)
             {
@@ -87,9 +87,14 @@ namespace WebAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(_service.Edit(subject));
+                _service.Edit(subject);
+                return Ok();
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -102,11 +107,22 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            _service.Delete(id);
-            return Ok();
+                _service.Delete(id);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

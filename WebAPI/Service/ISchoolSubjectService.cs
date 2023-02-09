@@ -5,7 +5,7 @@ namespace WebAPI.Service
     public interface ISchoolSubjectService
     {
         SchoolSubject GetById(int id);
-        IEnumerable<SchoolSubject> GetAll();
+        Task<IEnumerable<SchoolSubject>> GetAll();
         SchoolSubject Add(SchoolSubject subject);
         SchoolSubject Edit(SchoolSubject subject);
         void Delete(int id);

@@ -34,7 +34,7 @@ namespace WebAPI.Service
             return subject;
         }
 
-        public IEnumerable<SchoolSubject> GetAll() => _schoolSubjectRepository.GetAll();
+        public async Task<IEnumerable<SchoolSubject>> GetAll() => await _schoolSubjectRepository.GetAll();
 
         public SchoolSubject GetById(int id)
         {

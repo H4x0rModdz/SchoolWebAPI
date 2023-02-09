@@ -51,7 +51,7 @@ namespace WebAPI.Service
             return student;
         }
 
-        public IEnumerable<Student> GetAll()
+        public IEnumerable<Student> GetAll(string filter)
         {
             return _studentRepository.GetAll();
         }
@@ -62,6 +62,11 @@ namespace WebAPI.Service
                 throw new ArgumentException("Id does not exists");
 
             return _studentRepository.GetById(id);
+        }
+
+        public void LogError(Exception ex, string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }
