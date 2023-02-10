@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
         [Route("AddSubject")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Add([FromBody] SchoolSubject subject)
+        public async Task<ActionResult> Add([FromBody] SchoolSubject subject)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -80,7 +80,7 @@ namespace WebAPI.Controllers
         [Route("EditSubject")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Edit([FromBody] SchoolSubject subject)
+        public async Task<ActionResult>Edit([FromBody] SchoolSubject subject)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {

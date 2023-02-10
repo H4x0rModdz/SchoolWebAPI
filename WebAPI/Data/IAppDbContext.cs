@@ -8,5 +8,6 @@ namespace WebAPI.Data
         DbSet<Student> Students { get; set; }
         DbSet<SchoolSubject> Subjects { get; set; }
         int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

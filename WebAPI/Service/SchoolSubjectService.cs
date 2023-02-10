@@ -12,7 +12,7 @@ namespace WebAPI.Service
             _schoolSubjectRepository = schoolSubjectRepository;
         }
 
-        public SchoolSubject Add(SchoolSubject subject)
+        public async Task<SchoolSubject> Add(SchoolSubject subject)
         {
             if (subject.Name is null)
                 throw new ArgumentException("The Name field is required");
@@ -36,12 +36,27 @@ namespace WebAPI.Service
 
         public async Task<IEnumerable<SchoolSubject>> GetAll() => await _schoolSubjectRepository.GetAll();
 
-        public SchoolSubject GetById(int id)
+        public async Task<SchoolSubject> GetById(int id)
         {
             if (_schoolSubjectRepository.VerifyIfSubjectAlreadyExists(id))
                 throw new ArgumentException("Id does not exists");
 
-            return _schoolSubjectRepository.GetById(id);
+            return await _schoolSubjectRepository.GetById(id);
+        }
+
+        Task ISchoolSubjectService.Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<SchoolSubject> ISchoolSubjectService.Edit(SchoolSubject subject)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<SchoolSubject> ISchoolSubjectService.GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

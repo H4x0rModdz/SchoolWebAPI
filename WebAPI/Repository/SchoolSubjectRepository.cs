@@ -1,4 +1,5 @@
-﻿using WebAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
 using WebAPI.Models;
 
 namespace WebAPI.Repository
@@ -11,40 +12,40 @@ namespace WebAPI.Repository
             _context = context;
         }
 
-        public void Add(SchoolSubject subject)
+        public async Task Add(SchoolSubject subject)
         {
             _context.Subjects.Add(subject);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var subject = GetById(id);
+            var subject = await GetById(id);
 
             if (subject == null)
                 throw new ArgumentException("School Subject Not Found");
 
             _context.Subjects.Remove(subject);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Edit(SchoolSubject subject)
+        public async Task Edit(SchoolSubject subject)
         {
-            var subjectFound = GetById(subject.Id);
+            var subjectFound = await GetById(subject.Id);
             subjectFound.Name = subject.Name;
 
             _context.Subjects.Update(subjectFound);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<SchoolSubject> GetAll()
+        public async Task<IEnumerable<SchoolSubject>> GetAll()
         {
-            return _context.Subjects.ToList();
+            return await _context.Subjects.ToListAsync();
         }
 
-        public SchoolSubject GetById(int id)
+        public async Task<SchoolSubject> GetById(int id)
         {
-            return _context.Subjects.Find(id);
+            return await _context.Subjects.FindAsync(id);
         }
 
         public bool VerifyIfSubjectAlreadyExists(int id)
