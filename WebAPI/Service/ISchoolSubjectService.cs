@@ -9,5 +9,6 @@ namespace WebAPI.Service
         Task<SchoolSubject> Add(SchoolSubject subject);
         Task<SchoolSubject> Edit(SchoolSubject subject);
         Task Delete(int id);
+        void LogError(Exception ex, string message);
     }
 }

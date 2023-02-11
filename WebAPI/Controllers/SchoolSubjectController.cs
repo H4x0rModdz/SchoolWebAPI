@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<SchoolSubject>>> GetAll()
         {
             try
             {
@@ -30,7 +30,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error getting all subjects");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -52,7 +53,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error finding subject");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -72,7 +74,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error adding subject");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -98,6 +101,11 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (Exception ex)
+            {
+                _service.LogError(ex, "Error editing subject");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpDelete]
@@ -122,6 +130,11 @@ namespace WebAPI.Controllers
             catch (InvalidOperationException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _service.LogError(ex, "Error deleting subject");
+                return StatusCode(500, "Internal server error");
             }
         }
     }

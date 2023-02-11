@@ -17,7 +17,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetAll(string filter = null) // filter example: filter = educationLevel == HighSchool
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult GetAll(string? filter = null) // filter example: filter = educationLevel == HighSchool
         {
             if (string.IsNullOrEmpty(filter))
                 return BadRequest("Invalid filter");
@@ -34,15 +35,16 @@ namespace WebAPI.Controllers
             catch (Exception ex)
             {
                 _service.LogError(ex, "Error getting student list");
-                return BadRequest("There was an error processing your request");
+                return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpGet]
         [Route("GetStudentById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public ActionResult GetById(Guid id)
         {
             try
@@ -50,13 +52,14 @@ namespace WebAPI.Controllers
                 var student = _service.GetById(id);
 
                 if (student == null)
-                    return BadRequest();
+                    return NotFound();
 
                 return Ok(student);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error getting student");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -86,6 +89,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult Edit([FromBody] Student student)
         {
             try
@@ -102,7 +106,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _service.LogError(ex, "Error editing student");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -111,6 +116,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(Guid id)
         {
             if (!ModelState.IsValid)
@@ -123,7 +129,7 @@ namespace WebAPI.Controllers
             catch (Exception ex)
             {
                 _service.LogError(ex, "Error deleting student");
-                return BadRequest(ex.Message);
+                return StatusCode(500, "Internal server error");
             }
 
             return Ok();
