@@ -67,6 +67,7 @@ namespace WebAPI.Controllers
         [Route("AddStudent")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult Add([FromBody] Student student)
         {
             try
@@ -75,7 +76,7 @@ namespace WebAPI.Controllers
                     return BadRequest(ModelState);
 
                 var addedStudent = _service.Add(student);
-                return CreatedAtAction(nameof(GetById), new { id = addedStudent.Id }, addedStudent);
+                return CreatedAtAction(nameof(GetById), new { id = addedStudent.Id }, addedStudent); // used to show the url of the resource without having to search the db again
             }
             catch (Exception ex)
             {
@@ -115,7 +116,6 @@ namespace WebAPI.Controllers
         [Route("DeleteStudent")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(Guid id)
         {

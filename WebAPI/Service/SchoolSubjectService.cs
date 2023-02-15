@@ -17,7 +17,7 @@ namespace WebAPI.Service
             if (subject.Name is null)
                 throw new ArgumentException("The Name field is required");
 
-            _schoolSubjectRepository.Add(subject);
+            await _schoolSubjectRepository.Add(subject);
 
             return subject;
         }
@@ -42,6 +42,16 @@ namespace WebAPI.Service
                 throw new ArgumentException("Id does not exists");
 
             return await _schoolSubjectRepository.GetById(id);
+        }
+
+        public void LogError(Exception ex, string message)
+        {
+            var errorMessage = $"{message}: {ex.Message}. Stack Trace: {ex.StackTrace}";
+
+            using (var fileStream = new FileStream("logError.txt", FileMode.Append))
+
+            using (var writer = new StreamWriter(fileStream))
+                writer.WriteLine(errorMessage);
         }
 
         Task ISchoolSubjectService.Delete(int id)

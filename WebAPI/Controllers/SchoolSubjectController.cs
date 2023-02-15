@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         [Route("GetAllSubjects")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<SchoolSubject>>> GetAll()
         {
             try
@@ -38,13 +38,13 @@ namespace WebAPI.Controllers
         [HttpGet]
         [Route("GetSubjectById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetById(int id)
         {
             try
             {
-                var subject = _service.GetById(id);
+                var subject = await _service.GetById(id);
 
                 if (subject is null)
                     return NotFound();
@@ -62,6 +62,7 @@ namespace WebAPI.Controllers
         [Route("AddSubject")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> Add([FromBody] SchoolSubject subject)
         {
             if (!ModelState.IsValid)
@@ -69,8 +70,8 @@ namespace WebAPI.Controllers
 
             try
             {
-                var result = _service.Add(subject);
-                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+                var subjectAdded = await _service.Add(subject);
+                return CreatedAtAction(nameof(GetById), new { id = subjectAdded.Id }, subjectAdded);
             }
             catch (Exception ex)
             {
@@ -83,6 +84,7 @@ namespace WebAPI.Controllers
         [Route("EditSubject")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult>Edit([FromBody] SchoolSubject subject)
         {
             try
@@ -90,7 +92,7 @@ namespace WebAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _service.Edit(subject);
+                await _service.Edit(subject);
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -112,7 +114,7 @@ namespace WebAPI.Controllers
         [Route("DeleteSubject")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -120,7 +122,7 @@ namespace WebAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _service.Delete(id);
+                await _service.Delete(id);
                 return Ok();
             }
             catch (ArgumentException ex)
